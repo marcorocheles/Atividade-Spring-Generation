@@ -10,5 +10,10 @@ import org.springframework.stereotype.Repository;
 //Esta camada é responsável pela comunicação com o bando de dados
 @Repository
 public interface PostagemRepository extends JpaRepository<Postagem, Long> {
+	
+	/*
+	 * Method Query equivalente a instrução SQL
+	 * SELECT * FROM tb_postagem where like %titulo%
+	 */
 	public List<Postagem> findAllByTituloContainingIgnoreCase (String titulo);
 }
