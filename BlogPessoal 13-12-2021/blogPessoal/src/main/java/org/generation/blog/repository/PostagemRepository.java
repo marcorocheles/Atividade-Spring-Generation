@@ -14,6 +14,7 @@ public interface PostagemRepository extends JpaRepository<Postagem, Long> {
 	/*
 	 * Method Query equivalente a instrução SQL
 	 * SELECT * FROM tb_postagem where like %titulo%
+	 * Case = lowerCase ou UpperCase e não CASO
 	 */
 	public List<Postagem> findAllByTituloContainingIgnoreCase (String titulo);
 }

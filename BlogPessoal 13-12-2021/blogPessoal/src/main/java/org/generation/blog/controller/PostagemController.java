@@ -45,7 +45,7 @@ public class PostagemController {
 	    public ResponseEntity<Postagem> GetById(@PathVariable long id){ 
 	    	
 	    	/*agora faremos o retorno do getbyID, onde declaramos a comunicação com o banc de dados, o postagemRepository e
-	    	o findById com a variavel id enre (), esse retorno retorna um option que pode ser populado ou nulo
+	    	o findById com a variavel id entre (), esse retorno retorna um option que pode ser populado ou nulo
 	    	logo após um .map faz esse trabalho e criaremos um "if else" onde se estiver populado retornaremos e se nao dará not found
 	    	*/
 	        return postagemRepository.findById(id)
@@ -74,10 +74,13 @@ public class PostagemController {
 		public ResponseEntity<Postagem> put (@RequestBody Postagem postagem){
 			return ResponseEntity.status(HttpStatus.OK).body(postagemRepository.save(postagem));
 		}
-		  
+		
 		@DeleteMapping("/{id}")
-		public void delete(@PathVariable long id) {
-			postagemRepository.deleteById(id);
+		public ResponseEntity<?> deleteRepository(@PathVariable long id) {
+			return postagemRepository.findById(id).map(resposta -> {
+				postagemRepository.deleteById(id);
+				return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+			}).orElse(ResponseEntity.notFound().build());
 		}
 		
 }
